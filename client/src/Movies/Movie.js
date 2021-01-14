@@ -3,10 +3,11 @@ import { useParams, useRouteMatch, Route, NavLink } from "react-router-dom";
 import axios from 'axios';
 
 export default function Movie(props) {
+  console.log(props, 'movie props')
+  const addToSavedList = props.addToSavedList;
   const [movie, setMovie] = useState();
 
   const params = useParams();
-  console.log(params, 'params');
   const id = params.id;
 
   useEffect(() => {
@@ -15,7 +16,6 @@ export default function Movie(props) {
       .then(response => {
         // Study this response with a breakpoint or log statements
         // and set the response data as the 'movie' slice of state
-        console.log(response, 'response on movie component')
         setMovie(response.data);
       })
       .catch(error => {
@@ -52,7 +52,7 @@ export default function Movie(props) {
           </div>
         ))}
       </div>
-      <div className="save-button">Save</div>
+      <div className="save-button" onClick={() => addToSavedList(movie.id)}>Save</div>
     </div>
   );
 }
